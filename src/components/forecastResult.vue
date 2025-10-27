@@ -41,12 +41,16 @@ ul {
   padding: 0;
   display: grid;
   grid-template-columns: 12% 12% 22% 15% auto;
+  margin: 0.35rem 0; /* space between rows so rounded corners are visible */
+  border-radius: 8px; /* rounded corners */
+  overflow: hidden; /* clip children (for rounded corners) */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 ul:nth-child(even) {
-  background-color: aqua;
+  background-color: rgb(111, 121, 168);
 }
 ul:nth-child(odd) {
-  background-color: antiquewhite;
+  background-color: rgba(46, 47, 99, 0.582);
 }
 li {
   padding: 0 0.5em;

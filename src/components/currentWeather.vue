@@ -34,4 +34,16 @@ function getText(code) {
     <li>Direction:{{ props.weather.wind.direction }}{{ props.weather.wind.direction_unit }}</li>
   </ul>
 </template>
-<style scoped></style>
+<style scoped>
+ul {
+  background: var(--color-background-soft);
+  margin: 0.35rem 0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  list-style: none;
+}
+li {
+  padding: 0.25rem 0.5rem;
+}
+</style>

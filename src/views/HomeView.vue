@@ -11,10 +11,44 @@ const currentWeather = ref({})
 const currentLocation = ref({ lat: 60.0, long: 20.0, name: 'current location' })
 const props = defineProps(['name', 'lat', 'long'])
 
+async function reverseGeocode(lat, long) {
+  try {
+    // Use OpenStreetMap Nominatim reverse geocoding (no API key required)
+    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${encodeURIComponent(
+      lat,
+    )}&lon=${encodeURIComponent(long)}`
+    const res = await fetch(url, {
+      headers: {
+        // Nominatim asks for a valid user agent or referer; browsers will add a UA.
+        'Accept-Language': 'sv',
+      },
+    })
+    if (!res.ok) return null
+    const data = await res.json()
+    const addr = data.address || {}
+    // prefer city-like fields
+    return (
+      addr.city ||
+      addr.town ||
+      addr.village ||
+      addr.hamlet ||
+      addr.county ||
+      addr.state ||
+      addr.country ||
+      null
+    )
+  } catch (err) {
+    return null
+  }
+}
+
 onMounted(() => {
   getPosition()
-    .then((pos) => {
-      currentLocation.value = { name: 'Current location', ...pos.position }
+    .then(async (pos) => {
+      const lat = pos.position.lat
+      const long = pos.position.long
+      const place = (await reverseGeocode(lat, long)) || 'Nuvarande position'
+      currentLocation.value = { name: place, lat, long }
     })
     .catch(() => {})
 })
@@ -93,8 +127,27 @@ watch(currentLocation, () => {
   </main>
 </template>
 <style scoped>
+h2 {
+  font-size: 2.25rem;
+  text-align: center;
+  margin: 0.25rem 0 0.5rem;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
 .location {
   display: inline-block;
-  margin: 0 1em;
+  margin: 0.25rem 0.5rem;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+@media (min-width: 768px) {
+  h2 {
+    font-size: 2.75rem;
+  }
+  .location {
+    font-size: 1.05rem;
+  }
 }
 </style>

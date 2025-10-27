@@ -37,7 +37,7 @@ function toggleActive() {
   transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 .burger-bar {
-  background-color: #ed1313;
+  background-color: #13376d;
   position: absolute;
   top: 50%;
   right: 6px;

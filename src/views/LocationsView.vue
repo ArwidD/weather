@@ -94,11 +94,21 @@ ul {
   padding-left: 0;
 }
 li {
-  padding-left: 0.2em;
-  background-color: aquamarine;
+  padding: 0.65rem 0.75rem;
+  margin: 0.35rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  position: relative; /* so edit/remove absolute spans are positioned correctly */
+  cursor: pointer;
+  display: block;
 }
+/* match the same color ordering as the forecast rows on Home view */
 li:nth-child(odd) {
-  background-color: antiquewhite;
+  background-color: rgb(111, 121, 168);
+}
+li:nth-child(even) {
+  background-color: rgba(46, 47, 99, 0.582);
 }
 span.edit {
   position: absolute;
@@ -111,7 +121,6 @@ span.remove {
   font-weight: bold;
   right: 2.5em;
   display: inline-block;
-  background-color: red;
   color: antiquewhite;
   padding: 0;
   width: 1em;
